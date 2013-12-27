@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>PCPSolver</name>
-  <description>Java solver for the Post Correspondence
+  <description>Java solver for Post's Correspondence
   Problem.</description>
   <url>https://github.com/dcatteeu/pcpsolver</url>
 

@@ -1,7 +1,5 @@
 -*- mode: org; -*-
 
-* Publish on GitHub.
-
 * Add about box.
 
 * Remove doubles from the input set of dominos.
