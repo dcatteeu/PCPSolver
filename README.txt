@@ -12,7 +12,7 @@ Build and run
 1. Clone repository
 2. Go to root directory of the project
 3. Build executable JAR with "mvn install"
-4. Run with "java -jar target/pcpsolver-1.0-SNAPSHOT-jar-with-dependencies.jar"
+4. Run with "java -jar target/pcpsolver-1.0-jar-with-dependencies.jar"
 
 
 Dependencies
