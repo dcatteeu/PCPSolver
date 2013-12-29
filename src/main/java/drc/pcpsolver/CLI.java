@@ -43,12 +43,12 @@ public class CLI
 	return new Domino(parts[0], parts[1]);
     }
     
-    Domino[] getDominos (String[] dominoStrings, String separator) {
-	Domino[] dominos = new Domino[dominoStrings.length];
+    Domino[] getDominoes (String[] dominoStrings, String separator) {
+	Domino[] dominoes = new Domino[dominoStrings.length];
 	for (int i=0; i < dominoStrings.length; i++) {
-	    dominos[i] = stringToDomino(dominoStrings[i], separator);
+	    dominoes[i] = stringToDomino(dominoStrings[i], separator);
 	}
-	return dominos;
+	return dominoes;
     }
 
     String solutionToString (Node solution) {

@@ -54,22 +54,22 @@ public class InstancePanel extends JPanel
 	return new Domino(parts[0], parts[1]);
     }
 
-    // Return the array of currently defined dominos. Assume 1 domino
+    // Return the array of currently defined dominoes. Assume 1 domino
     // per line.
-    Domino[] getDominos () {
+    Domino[] getDominoes () {
 	String allText = textArea.getText();
 	String[] lines = allText.split("\n");
-	Domino[] dominos = new Domino[lines.length];
+	Domino[] dominoes = new Domino[lines.length];
 	for (int i=0; i < lines.length; i++) {
-	    dominos[i] = stringToDomino(lines[i]);
+	    dominoes[i] = stringToDomino(lines[i]);
 	}
-	return dominos;
+	return dominoes;
     }
 
     // Return the current PCP instance.
     Pcp getPcpInstance() {
-	Domino[] dominos = getDominos();
-	Pcp pcp = new Pcp(dominos);
+	Domino[] dominoes = getDominoes();
+	Pcp pcp = new Pcp(dominoes);
 	return pcp;
     }
 }

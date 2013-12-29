@@ -25,16 +25,26 @@ import drc.jsearch.*;
 
 public class Pcp extends AbstractSearchProblem
 {
-    final Domino dominos[];
+    final Domino dominoes[];
 
     // The number of symbols the top (bottom) string can grow more
     // than the bottom (top) string. Useful for heuristic.
     final int maxTopGrow, maxBottomGrow;
 
-    public Pcp (Domino dominos[]) {
-	this.dominos = dominos;
+    Domino[] withoutDoubles (Domino dominoes[]) {
+	LinkedList<Domino> list = new LinkedList<Domino>();
+	for (Domino domino : dominoes) {
+	    if (!list.contains(domino)) {
+		list.addFirst(domino);
+	    }
+	}
+	return list.toArray(dominoes);
+    }
+
+    public Pcp (Domino dominoes[]) {	
+	this.dominoes = withoutDoubles(dominoes);
 	int maximum = Integer.MIN_VALUE, minimum = Integer.MAX_VALUE;
-	for (Domino domino : dominos) {
+	for (Domino domino : dominoes) {
 	    maximum = Math.max(maximum, domino.lengthDifference());
 	    minimum = Math.min(minimum, domino.lengthDifference());
 	}
@@ -44,17 +54,17 @@ public class Pcp extends AbstractSearchProblem
 
     // Return the reverse PCP instance. It has all strings reversed.
     public Pcp reverse () {
-	Domino reverseDominos[] = new Domino[dominos.length];
-	for (int i = 0; i < dominos.length; i++) {
-	    reverseDominos[i] = dominos[i].reverse();
+	Domino reverseDominoes[] = new Domino[dominoes.length];
+	for (int i = 0; i < dominoes.length; i++) {
+	    reverseDominoes[i] = dominoes[i].reverse();
 	}
-	return new Pcp(reverseDominos);
+	return new Pcp(reverseDominoes);
     }
 
     // Return true if, and only if, there is a domino with which the
     // match can start.
     public boolean hasPrefix () {
-	for (Domino domino : dominos) {
+	for (Domino domino : dominoes) {
 	    if (domino.canStartWith()) return true;
 	}
 	return false;
@@ -63,7 +73,7 @@ public class Pcp extends AbstractSearchProblem
     // Return true if, and only if, there is a domino with which the
     // match can end.
     public boolean hasPostfix () {
-	for (Domino domino : dominos) {
+	for (Domino domino : dominoes) {
 	    if (domino.canEndWith()) return true;
 	}
 	return false;
@@ -72,7 +82,7 @@ public class Pcp extends AbstractSearchProblem
     // Return true if, and only if, there is a domino that is a
     // solution by itself.
     public boolean hasTrivialSolution () {
-	for (Domino domino : dominos) {
+	for (Domino domino : dominoes) {
 	    if (domino.isSolution()) return true;
 	}
 	return false;
@@ -82,7 +92,7 @@ public class Pcp extends AbstractSearchProblem
     // longer top than bottom string. Such a domino can shrink the
     // configuration if it is in the bottom.
     public boolean hasLongerTop () {
-	for (Domino domino : dominos) {
+	for (Domino domino : dominoes) {
 	    if (domino.lengthDifference() > 0) return true;
 	}
 	return false;
@@ -92,7 +102,7 @@ public class Pcp extends AbstractSearchProblem
     // longer bottom than top string. Such a domino can shrink the
     // configuration if it is in the top.
     public boolean hasLongerBottom () {
-	for (Domino domino : dominos) {
+	for (Domino domino : dominoes) {
 	    if (domino.lengthDifference() < 0) return true;
 	}
 	return false;
@@ -117,7 +127,7 @@ public class Pcp extends AbstractSearchProblem
 	    = new ArrayList<StateActionPair>();
 	PcpState to;
 	PcpAction action;
-	for (Domino domino : dominos) {
+	for (Domino domino : dominoes) {
 	    to = from.add(domino);
 	    if (to != null) {
 		action = new PcpAction(domino);

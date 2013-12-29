@@ -27,7 +27,7 @@ public class PcpState implements StateInterface
     // The unmatched part of top and bottom string. Either top or
     // bottom is empty.
     final String top, bottom;
-    // Depth of the state. This is the number of dominos used.
+    // Depth of the state. This is the number of dominoes used.
     final int depth;
     // The cached hashcode, depends on the unmatched part.
     final int hashcode;
@@ -78,17 +78,19 @@ public class PcpState implements StateInterface
     // least depth 1; or they must both be the initial configuration.
     @Override
     public boolean equals (Object other) {
-	PcpState otherPcp = (PcpState) other;
-	if (other == null)
+	if (other instanceof PcpState) {
+	    PcpState otherPcp = (PcpState) other;
+	    if (depth == 0 && otherPcp.depth == 0) {
+		// The initial configuration.
+		return true;
+	    } else {
+		return depth > 0 && otherPcp.depth > 0
+		    && top.equals(otherPcp.top)
+		    && bottom.equals(otherPcp.bottom);
+	    }
+	} else {
 	    return false;
-	if (other == this)
-	    return true;
-	// The initial configuration.
-	if (depth == 0 && otherPcp.depth == 0)
-	    return true; 
-	return depth > 0 && otherPcp.depth > 0
-	    && top.equals(otherPcp.top)
-	    && bottom.equals(otherPcp.bottom);
+	}
     }
 
     @Override

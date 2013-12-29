@@ -1,21 +1,5 @@
 -*- mode: org; -*-
 
-* Add about box.
-
-* Remove doubles from the input set of dominos.
-
-* Allow to set a maximum search depth.
-
-* Fix search result: search may stop since there are no more nodes in open list. This is either due to (a) all possible paths are exhausted, (b) some path are still promising but are to deep. In case (a) we need to report that the PCP instance has no match. In case (b) we need to report the PCP instance has no match of length less than x.
-
-* Find out why bigger closedlists, suddenly slow down search. Test whether the threshold increases with more heap space.
-
-* Provide generic way of reading PCP instances. Specify top-bottom-separator, domino-separator, and iteration-order (either top,bottom;top,bottom,... or top;top;...,bottom;bottom;... where the top-bottom-separator is , and the domino-separator is ;).
-
-* Add mask and exclusion method to filters.
-
-* Probe forward and backward search, estimate branching factor, and search the direction with the smallest one.
-
 * Add some integration tests.
 ** 100/1, 0/100, 1/00: yes
 ** 100/1, 0/100, 1/0: yes, 8s
@@ -30,3 +14,15 @@
 ** 0/10, 01/1: no, no prefix
 
 * Add some unit tests.
+
+* Add about box. License info, link to site.
+
+* Allow to set a maximum search depth and report corresponding search result: search may stop since there are no more nodes in open list. This is either due to (a) all possible paths are exhausted, (b) some path are still promising but are to deep. In case (a) we need to report that the PCP instance has no match. In case (b) we need to report the PCP instance has no match of length less than x.
+
+* Find out why bigger closedlists, suddenly slow down search. Test whether the threshold increases with more heap space.
+
+* Provide generic way of reading PCP instances. Specify top-bottom-separator, domino-separator, and iteration-order (either top,bottom;top,bottom,... or top;top;...,bottom;bottom;... where the top-bottom-separator is , and the domino-separator is ;).
+
+* Add mask and exclusion method to filters.
+
+* Probe forward and backward search, estimate branching factor, and search the direction with the smallest one.

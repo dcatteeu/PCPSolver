@@ -61,6 +61,15 @@ public class Domino
     }
 
     @Override
+    public boolean equals (Object obj) {
+	if (obj instanceof Domino) {
+	    return top.equals(obj.top) && bottom.equals(obj.bottom);
+	} else {
+	    return false;
+	}
+    }
+
+    @Override
     public String toString () {
 	return new String("<Domino: " + top + "/" + bottom + ">");
     }
