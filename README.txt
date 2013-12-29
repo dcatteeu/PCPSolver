@@ -3,7 +3,8 @@ What
 
 PCPSolver is a Java application which (tries to) solve instances of
 Post's Correspondence Problem, PCP for short
-(http://en.wikipedia.org/wiki/Post_correspondence_problem).
+(http://en.wikipedia.org/wiki/Post_correspondence_problem). For more
+information: http://dcatteeu.github.io/pcpsolver.html.
 
 
 Build and run
