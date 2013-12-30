@@ -15,8 +15,6 @@
 
 * Add some unit tests.
 
-* Add about box. License info, link to site.
-
 * Allow to set a maximum search depth and report corresponding search result: search may stop since there are no more nodes in open list. This is either due to (a) all possible paths are exhausted, (b) some path are still promising but are to deep. In case (a) we need to report that the PCP instance has no match. In case (b) we need to report the PCP instance has no match of length less than x.
 
 * Find out why bigger closedlists, suddenly slow down search. Test whether the threshold increases with more heap space.
