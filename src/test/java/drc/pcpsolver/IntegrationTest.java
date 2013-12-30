@@ -23,7 +23,6 @@ package drc.pcpsolver;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -72,7 +71,8 @@ public class IntegrationTest
 					  Solver.ReasonNoSolution.NO_PREFIX,
 					  Solver.ReasonNoSolution.NO_POSTFIX,
 					  Solver.ReasonNoSolution.LENGTH_UNBALANCED };
-    boolean[] results = { false, true, true, true, true, true, true};
+    boolean[] results = { false, true, true, true, true, true, true,
+			  false, false, false, false };
     
     @Test
     public void testFilters () {
@@ -84,7 +84,7 @@ public class IntegrationTest
     @Test
     public void testSearch() {
 	for (int i = 0; i < results.length; i++) {
-	    assertEquals(results[i], solver.findMatch(pcps[i], 10) != null);
+	    assertEquals(results[i], solver.findMatch(pcps[i], 75) != null);
 	}
     }
 }

@@ -26,7 +26,7 @@ public class Solver
 {
     static final int DEFAULT_CACHE_SIZE = 100000;
 
-    final SearchAlgorithmInterface searchAlgorithm;
+    final IterativeDeepeningAStarSearch searchAlgorithm;
 
     public enum ReasonNoSolution
     {
@@ -65,9 +65,10 @@ public class Solver
 	return null;
     }
 
-    public Node findMatch (Pcp pcp, int maxDepth) {
+    public Node findMatch (Pcp pcp, double maxDepth) {
 	searchAlgorithm.cancel(false);
 	searchAlgorithm.resetStatistics();
+	searchAlgorithm.setMaxDepth(maxDepth);
 	return searchAlgorithm.execute(pcp);
     }
 

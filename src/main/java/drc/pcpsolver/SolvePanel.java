@@ -34,7 +34,7 @@ public class SolvePanel extends JPanel implements ActionListener
     static final int REPORT_INTERVAL = 500;
     static final int INITIAL_REPORT_DELAY = REPORT_INTERVAL;
     static final int CACHE_SIZE = 100000;
-    static final int DEFAULT_MAX_DEPTH = 50;
+    static final double DEFAULT_MAX_DEPTH = 50.0;
 
     // final JTextField maxSolutionLengthTextField;
     final JButton solveButton, cancelButton;
