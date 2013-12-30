@@ -34,7 +34,7 @@ public class CLI
     final Solver solver;
 
     public CLI (String[] dominoStrings) {
-	pcp = new Pcp(getDominos(dominoStrings, TOP_BOTTOM_SEPARATOR));
+	pcp = new Pcp(getDominoes(dominoStrings, TOP_BOTTOM_SEPARATOR));
 	solver = new Solver();
     }
 

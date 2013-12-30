@@ -30,18 +30,16 @@ public class InstancePanel extends JPanel
     final JTextArea textArea;
 
     InstancePanel () {
-	//setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 	setLayout(new BorderLayout(5, 5));
 	
 	add(new JLabel("<html>Define the PCP instance below. Define one" +
 		       " domino per line. Each domino is defined by the" +
 		       " concatenation of its top string, a forward slash" +
-		       " (/), and its bottom string. For example: 01/111." +
+		       " (/), and its bottom string. For example: ab/bbb." +
 		       "</html>"),
 	    BorderLayout.PAGE_START);
 	
-	textArea = new JTextArea(5, 5);
-	textArea.setText("100/1\n0/100\n1/0");
+	textArea = new JTextArea("baa/b\na/baa\nb/a");
 	JScrollPane scrollPane = new JScrollPane(textArea);
 	textArea.setEditable(true);
 	add(scrollPane, BorderLayout.CENTER);

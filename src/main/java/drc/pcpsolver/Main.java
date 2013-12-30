@@ -37,14 +37,13 @@ public class Main
 	contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 	InstancePanel instancePanel = new InstancePanel();
-	instancePanel.setPreferredSize(new Dimension(400, 200));
-        contentPane.add(instancePanel, BorderLayout.CENTER);
+	instancePanel.setPreferredSize(new Dimension(320, 150));
+        contentPane.add(instancePanel, BorderLayout.PAGE_START);
 	
 	SolvePanel solvePanel = new SolvePanel(instancePanel);
-	solvePanel.setPreferredSize(new Dimension(400, 200));
-	contentPane.add(solvePanel, BorderLayout.PAGE_END);
+	solvePanel.setPreferredSize(new Dimension(320, 150));
+	contentPane.add(solvePanel, BorderLayout.CENTER);
 	
-	frame.setResizable(false);
 	frame.pack();
         frame.setVisible(true);
     }

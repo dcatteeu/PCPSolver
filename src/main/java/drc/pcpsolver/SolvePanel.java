@@ -77,7 +77,7 @@ public class SolvePanel extends JPanel implements ActionListener
 	panel.add(cancelButton);
 	add(panel, BorderLayout.PAGE_START);
 
-	outputTextArea = new JTextArea(5, 5);
+	outputTextArea = new JTextArea(1, 1);
 	outputTextArea.setEditable(false);
 	add(new JScrollPane(outputTextArea), BorderLayout.CENTER);
 

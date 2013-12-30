@@ -63,7 +63,8 @@ public class Domino
     @Override
     public boolean equals (Object obj) {
 	if (obj instanceof Domino) {
-	    return top.equals(obj.top) && bottom.equals(obj.bottom);
+	    Domino other = (Domino) obj;
+	    return top.equals(other.top) && bottom.equals(other.bottom);
 	} else {
 	    return false;
 	}

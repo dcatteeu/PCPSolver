@@ -38,13 +38,13 @@ public class Pcp extends AbstractSearchProblem
 		list.addFirst(domino);
 	    }
 	}
-	return list.toArray(dominoes);
+	return list.toArray(new Domino[list.size()]);
     }
 
     public Pcp (Domino dominoes[]) {	
 	this.dominoes = withoutDoubles(dominoes);
 	int maximum = Integer.MIN_VALUE, minimum = Integer.MAX_VALUE;
-	for (Domino domino : dominoes) {
+	for (Domino domino : this.dominoes) {
 	    maximum = Math.max(maximum, domino.lengthDifference());
 	    minimum = Math.min(minimum, domino.lengthDifference());
 	}
