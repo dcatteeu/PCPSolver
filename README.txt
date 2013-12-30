@@ -22,4 +22,3 @@ Dependencies
 Java 6
 Maven 3
 drc.jsearch.1.0-SNAPSHOT.jar
-JUnit 3.8.1 for the unit tests
