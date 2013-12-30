@@ -1,18 +1,5 @@
 -*- mode: org; -*-
 
-* Add some integration tests.
-** 100/1, 0/100, 1/00: yes
-** 100/1, 0/100, 1/0: yes, 8s
-** 01/1, 1/011, 011/0: yes
-** 0/1, 01/0, 1/101: yes
-** 1/111, 10111/10, 10/0: yes
-** 01/0, 110010/0, 1/1111, 11/01: yes
-** 10/101, 011/11, 101/011: no, repetition
-** 10/101, 010/11, 101/011: no, no postfix
-** 11/101, 011/11, 101/011: no, no prefix
-** 10/101, 01/11, 10/11: no, length unbalanced
-** 0/10, 01/1: no, no prefix
-
 * Add some unit tests.
 
 * Allow to set a maximum search depth and report corresponding search result: search may stop since there are no more nodes in open list. This is either due to (a) all possible paths are exhausted, (b) some path are still promising but are to deep. In case (a) we need to report that the PCP instance has no match. In case (b) we need to report the PCP instance has no match of length less than x.
