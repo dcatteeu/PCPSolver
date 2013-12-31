@@ -32,23 +32,25 @@ public class PcpState implements StateInterface
     // The cached hashcode, depends on the unmatched part.
     final int hashcode;
 
+    final String value;
+
     PcpState (String top, String bottom, int depth) {
 	this.top = top;
 	this.bottom = bottom;
 	this.depth = depth;
 	assert (top.isEmpty() || bottom.isEmpty());
-	String value;
 	if (depth == 0) {
 	    assert (top.isEmpty() && bottom.isEmpty());
-	    value = "|null|";
+	    this.value = "|null|";
 	} else {
-	    value = top + "|" + bottom;
+	    this.value = top + "|" + bottom;
 	}
 	this.hashcode = value.hashCode();
     }
 
     public String key () {
-	return (depth == 0) ? "|null|" : top + "|" + bottom;
+	return value;
+	//	return (depth == 0) ? "|null|" : top + "|" + bottom;
     }
 
     // Return the configuration that results from adding the given
@@ -61,12 +63,11 @@ public class PcpState implements StateInterface
 	       && top.charAt(matchLength) == bottom.charAt(matchLength)) {
 	    matchLength++;
 	}
-	if ((matchLength < top.length()) && (matchLength < bottom.length())) {
-	    return null; // No match.
-	}
-	return new PcpState(top.substring(matchLength),
-			    bottom.substring(matchLength),
-			    depth+1);
+	return (matchLength < top.length() && matchLength < bottom.length())
+	    ? null // No match.
+	    : new PcpState(top.substring(matchLength),
+			   bottom.substring(matchLength),
+			   depth+1);
     }
 
     int lengthDifference () {

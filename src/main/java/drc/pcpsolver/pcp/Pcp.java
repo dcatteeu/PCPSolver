@@ -124,14 +124,12 @@ public class Pcp extends AbstractSearchProblem
     public List<StateActionPair> successors (StateInterface state) {
 	PcpState from = (PcpState) state;
 	List<StateActionPair> stateActionPairs
-	    = new ArrayList<StateActionPair>();
+	    = new LinkedList<StateActionPair>();
 	PcpState to;
-	PcpAction action;
 	for (Domino domino : dominoes) {
 	    to = from.add(domino);
 	    if (to != null) {
-		action = new PcpAction(domino);
-		stateActionPairs.add(new StateActionPair(to, action));
+		stateActionPairs.add(new StateActionPair(to, domino));
 	    }
 	}
 	return stateActionPairs;

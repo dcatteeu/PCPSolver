@@ -39,9 +39,9 @@ public class IntegrationTest
 		   new Pcp(new Domino[]{ new Domino("100","1"),
 					 new Domino("0","100"),
 					 new Domino("1","00") }), // yes
-		   new Pcp(new Domino[]{ new Domino("100","1"),
-					 new Domino("0","100"),
-					 new Domino("1","0") }), // yes, 8s
+		   // new Pcp(new Domino[]{ new Domino("100","1"),
+		   // 			 new Domino("0","100"),
+		   // 			 new Domino("1","0") }), // yes, 8s
 		   new Pcp(new Domino[]{ new Domino("01","1"),
 					 new Domino("1","011"),
 					 new Domino("011","0") }), // yes
@@ -66,12 +66,12 @@ public class IntegrationTest
 		   new Pcp(new Domino[]{ new Domino("10","101"),
 					 new Domino("01","101"),
 					 new Domino("10","11")}) }; //UNBALANCED,
-    Solver.ReasonNoSolution[] reasons = { null, null, null, null, null, null, null,
+    Solver.ReasonNoSolution[] reasons = { null, null, /*null,*/ null, null, null, null,
 					  Solver.ReasonNoSolution.NO_PREFIX,
 					  Solver.ReasonNoSolution.NO_PREFIX,
 					  Solver.ReasonNoSolution.NO_POSTFIX,
 					  Solver.ReasonNoSolution.LENGTH_UNBALANCED };
-    boolean[] results = { false, true, true, true, true, true, true,
+    boolean[] results = { false, true, /*true,*/ true, true, true, true,
 			  false, false, false, false };
     
     @Test

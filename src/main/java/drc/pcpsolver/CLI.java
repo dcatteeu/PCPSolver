@@ -50,21 +50,21 @@ public class CLI
 	}
 	return dominoes;
     }
-
+    
     String solutionToString (Node solution) {
 	LinkedList<Node> path = solution.pathTo();
 	String top="", bottom="";
 	Iterator<Node> it = path.iterator();
-	it.next();
-	PcpAction pcpAction = (PcpAction) it.next().action;
-	top = top.concat(pcpAction.domino.top);
-	bottom = bottom.concat(pcpAction.domino.bottom);
+	it.next(); // Skip root node, it has no action.
+	Domino domino = (Domino) it.next().action;
+	top = top.concat(domino.top);
+	bottom = bottom.concat(domino.bottom);
 	while (it.hasNext()) {
 	    top = top.concat(" | ");
 	    bottom = bottom.concat(" | ");
-	    pcpAction = (PcpAction) it.next().action;
-	    top = top.concat(pcpAction.domino.top);
-	    bottom = bottom.concat(pcpAction.domino.bottom);
+	    domino = (Domino) it.next().action;
+	    top = top.concat(domino.top);
+	    bottom = bottom.concat(domino.bottom);
 	}
 	return top + "\n" + bottom + "\n";
     }

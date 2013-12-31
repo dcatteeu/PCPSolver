@@ -34,7 +34,7 @@ public class SolvePanel extends JPanel implements ActionListener
     static final int REPORT_INTERVAL = 500;
     static final int INITIAL_REPORT_DELAY = REPORT_INTERVAL;
     static final int CACHE_SIZE = 100000;
-    static final double DEFAULT_MAX_DEPTH = 50.0;
+    static final double DEFAULT_MAX_DEPTH = 100.0;
 
     // final JTextField maxSolutionLengthTextField;
     final JButton solveButton, cancelButton;
@@ -87,23 +87,23 @@ public class SolvePanel extends JPanel implements ActionListener
 	
 	solver = new Solver();	
     }
-
+    
     String solutionToString (LinkedList<ActionInterface> actions) {
 	String top = "", bottom = "";
 	Iterator<ActionInterface> it = actions.iterator();
-	PcpAction pcpAction = (PcpAction) it.next();
-	top = pcpAction.domino.top;
-	bottom = pcpAction.domino.bottom;
+	Domino domino = (Domino) it.next();
+	top = domino.top;
+	bottom = domino.bottom;
 	while (it.hasNext()) {
 	    top = top.concat(" | ");
 	    bottom = bottom.concat(" | ");
-	    pcpAction = (PcpAction) it.next();
-	    top = top.concat(pcpAction.domino.top);
-	    bottom = bottom.concat(pcpAction.domino.bottom);
+	    domino = (Domino) it.next();
+	    top = top.concat(domino.top);
+	    bottom = bottom.concat(domino.bottom);
 	}
 	return top + "\n" + bottom + "\n";
     }
-
+    
     void printSolution (Node solution) {
 	if (solution != null) {
 	    LinkedList<ActionInterface> actions = solution.actionsTo();
@@ -114,13 +114,29 @@ public class SolvePanel extends JPanel implements ActionListener
 	    outputTextArea.setText("The PCP instance has no match.\n" +
 				   "All possibilities have been examined.");
 	}
+	double avgBranchingFactor = 1.0;
+	int n = solver.searchAlgorithm.nofNodesVisited(0);
+	System.out.println("" + 0 + "\t" + n);
+	for (int i = 1; i < Solver.PROBE_DEPTH; i++) {
+	    n = solver.searchAlgorithm.nofNodesVisited(i);
+	    int m = solver.searchAlgorithm.nofNodesVisited(i-1);
+	    double b = 1.0 * n / m;
+	    avgBranchingFactor += b;
+	    System.out.println("" + i + "\t" + n + "\t" + b);
+	    if (n == 0) {
+		break;
+	    }
+	}
+	avgBranchingFactor /= Solver.PROBE_DEPTH - 1;
+	System.out.println("avg bf: " + avgBranchingFactor);
     }
 
     void printSearchStatistics () {
 	// IterativeDeepeningSearch algo
 	//     = (IterativeDeepeningSearch) searchAlgorithm;
 	long elapsedTime = System.currentTimeMillis() - startTime;
-	outputTextArea.setText("Searching for " + elapsedTime / 1000 + " seconds.");
+	outputTextArea.setText("Searching for " + elapsedTime / 1000
+			       + " seconds.");
 	// outputTextArea.append("iteration: " + algo.currentIteration() + "\n");
 	// outputTextArea.append("nodes: " + algo.nofNodesVisited() / 1000 + "K\n");
 	// outputTextArea.append("depth: " + algo.currentDepth() + "\n");
@@ -132,9 +148,9 @@ public class SolvePanel extends JPanel implements ActionListener
     class SearchTask extends SwingWorker<Node, Void>
     {
 	final Pcp pcp;
-	final int maxDepth;
+	final double maxDepth;
 	
-	SearchTask (Pcp pcp, int maxDepth) {
+	SearchTask (Pcp pcp, double maxDepth) {
 	    this.pcp = pcp;
 	    this.maxDepth = maxDepth;
 	}
@@ -176,7 +192,8 @@ public class SolvePanel extends JPanel implements ActionListener
 	    solveButton.setEnabled(false);
 	    outputTextArea.setText("");
 	    Pcp pcp = instancePanel.getPcpInstance();
-	    Solver.ReasonNoSolution reason = solver.findReasonNoSolution(pcp);
+	    Solver.ReasonNoSolution reason =
+		solver.findReasonNoSolution(pcp);
 	    if (reason != null) {
 		outputTextArea.setText("PCP instance has no match.\n"
 				       + reason.explanation());

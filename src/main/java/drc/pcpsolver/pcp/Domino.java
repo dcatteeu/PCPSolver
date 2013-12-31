@@ -20,7 +20,9 @@ along with PCPSolver.  If not, see <http://www.gnu.org/licenses/>.
 
 package drc.pcpsolver.pcp;
 
-public class Domino
+import drc.jsearch.*;
+
+public class Domino implements ActionInterface
 {
     public final String top, bottom;
     

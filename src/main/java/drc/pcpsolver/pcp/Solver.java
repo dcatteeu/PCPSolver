@@ -24,9 +24,10 @@ import drc.jsearch.*;
 
 public class Solver
 {
-    static final int DEFAULT_CACHE_SIZE = 100000;
+    public static final int DEFAULT_CACHE_SIZE = 100000;
+    public static final int PROBE_DEPTH = 75;
 
-    final IterativeDeepeningAStarSearch searchAlgorithm;
+    public final IterativeDeepeningAStarSearch searchAlgorithm;
 
     public enum ReasonNoSolution
     {
@@ -39,8 +40,8 @@ public class Solver
 	    case NO_POSTFIX:
 		return "There is no domino to end the match.";
 	    case LENGTH_UNBALANCED:
-		return "There is no domino to shrink a configuration in the top " +
-		    "and/or the bottom.";
+		return "There is no domino to shrink a configuration in " +
+		    "the top and/or the bottom.";
 	    }
 	    return null;
 	}
@@ -68,6 +69,7 @@ public class Solver
     public Node findMatch (Pcp pcp, double maxDepth) {
 	searchAlgorithm.cancel(false);
 	searchAlgorithm.resetStatistics();
+	searchAlgorithm.trackNofNodesVisitedPerDepth(PROBE_DEPTH);
 	searchAlgorithm.setMaxDepth(maxDepth);
 	return searchAlgorithm.execute(pcp);
     }
