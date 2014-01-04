@@ -21,7 +21,7 @@ along with PCPSolver.  If not, see <http://www.gnu.org/licenses/>.
 package drc.pcpsolver;
 
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 import drc.jsearch.*;
 import drc.pcpsolver.pcp.*;
 
@@ -52,7 +52,7 @@ public class CLI
     }
     
     String solutionToString (Node solution) {
-	LinkedList<Node> path = solution.pathTo();
+	List<Node> path = solution.pathTo();
 	String top="", bottom="";
 	Iterator<Node> it = path.iterator();
 	it.next(); // Skip root node, it has no action.

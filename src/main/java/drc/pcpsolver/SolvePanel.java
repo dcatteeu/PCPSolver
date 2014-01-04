@@ -22,7 +22,7 @@ package drc.pcpsolver;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Iterator;
 import javax.swing.*;
 
@@ -88,7 +88,7 @@ public class SolvePanel extends JPanel implements ActionListener
 	solver = new Solver();	
     }
     
-    String solutionToString (LinkedList<ActionInterface> actions) {
+    String solutionToString (List<ActionInterface> actions) {
 	String top = "", bottom = "";
 	Iterator<ActionInterface> it = actions.iterator();
 	Domino domino = (Domino) it.next();
@@ -106,7 +106,7 @@ public class SolvePanel extends JPanel implements ActionListener
     
     void printSolution (Node solution) {
 	if (solution != null) {
-	    LinkedList<ActionInterface> actions = solution.actionsTo();
+	    List<ActionInterface> actions = solution.actionsTo();
 	    outputTextArea.setText("The PCP instance has a match of length "
 				   + actions.size() + ":\n");
 	    outputTextArea.append(solutionToString(actions));

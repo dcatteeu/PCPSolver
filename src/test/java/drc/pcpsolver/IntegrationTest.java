@@ -33,46 +33,48 @@ public class IntegrationTest
 {
     final Solver solver = new Solver();
 
-    Pcp[] pcps = { new Pcp(new Domino[]{ new Domino("10","101"),
-					 new Domino("011","11"),
-					 new Domino("101","011") }), // no, repetition
-		   new Pcp(new Domino[]{ new Domino("100","1"),
-					 new Domino("0","100"),
-					 new Domino("1","00") }), // yes
-		   // new Pcp(new Domino[]{ new Domino("100","1"),
-		   // 			 new Domino("0","100"),
-		   // 			 new Domino("1","0") }), // yes, 8s
-		   new Pcp(new Domino[]{ new Domino("01","1"),
-					 new Domino("1","011"),
-					 new Domino("011","0") }), // yes
-		   new Pcp(new Domino[]{ new Domino("0","1"),
-					 new Domino("01","0"),
-					 new Domino("1","101") }), // yes
-		   new Pcp(new Domino[]{ new Domino("1","111"),
-					 new Domino("10111","10"),
-					 new Domino("10","0") }), // yes
-		   new Pcp(new Domino[]{ new Domino("01","0"),
-					 new Domino("110010","0"),
-					 new Domino("1","1111"),
-					 new Domino("11","01") }), // yes
-		   new Pcp(new Domino[]{ new Domino("0", "10"),
-					 new Domino("01", "1")}),  //NO_PREFIX
-		   new Pcp(new Domino[]{ new Domino("11", "101"),
-					 new Domino("011","11"),
-					 new Domino("101","011")}),  //NO_PREFIX
-		   new Pcp(new Domino[]{ new Domino("10","101"),
-					 new Domino("10","11"),
-					 new Domino("01","011")}), //NO_POSTFIX,
-		   new Pcp(new Domino[]{ new Domino("10","101"),
-					 new Domino("01","101"),
-					 new Domino("10","11")}) }; //UNBALANCED,
-    Solver.ReasonNoSolution[] reasons = { null, null, /*null,*/ null, null, null, null,
-					  Solver.ReasonNoSolution.NO_PREFIX,
-					  Solver.ReasonNoSolution.NO_PREFIX,
-					  Solver.ReasonNoSolution.NO_POSTFIX,
-					  Solver.ReasonNoSolution.LENGTH_UNBALANCED };
-    boolean[] results = { false, true, /*true,*/ true, true, true, true,
-			  false, false, false, false };
+    final Pcp[] pcps 
+	= { new Pcp(new Domino[]{ new Domino("10","101"),
+				  new Domino("011","11"),
+				  new Domino("101","011") }), // no, repetition
+	    new Pcp(new Domino[]{ new Domino("100","1"),
+				  new Domino("0","100"),
+				  new Domino("1","00") }), // yes
+	    // new Pcp(new Domino[]{ new Domino("100","1"),
+	    // 			 new Domino("0","100"),
+	    // 			 new Domino("1","0") }), // yes, 8s
+	    new Pcp(new Domino[]{ new Domino("01","1"),
+				  new Domino("1","011"),
+				  new Domino("011","0") }), // yes
+	    new Pcp(new Domino[]{ new Domino("0","1"),
+				  new Domino("01","0"),
+				  new Domino("1","101") }), // yes
+	    new Pcp(new Domino[]{ new Domino("1","111"),
+				  new Domino("10111","10"),
+				  new Domino("10","0") }), // yes
+	    new Pcp(new Domino[]{ new Domino("01","0"),
+				  new Domino("110010","0"),
+				  new Domino("1","1111"),
+				  new Domino("11","01") }), // yes
+	    new Pcp(new Domino[]{ new Domino("0", "10"),
+				  new Domino("01", "1")}),  //NO_PREFIX
+	    new Pcp(new Domino[]{ new Domino("11", "101"),
+				  new Domino("011","11"),
+				  new Domino("101","011")}),  //NO_PREFIX
+	    new Pcp(new Domino[]{ new Domino("10","101"),
+				  new Domino("10","11"),
+				  new Domino("01","011")}), //NO_POSTFIX,
+	    new Pcp(new Domino[]{ new Domino("10","101"),
+				  new Domino("01","101"),
+				  new Domino("10","11")}) }; //UNBALANCED,
+    final Solver.ReasonNoSolution[] reasons 
+	= { null, null, /*null,*/ null, null, null, null,
+	    Solver.ReasonNoSolution.NO_PREFIX,
+	    Solver.ReasonNoSolution.NO_PREFIX,
+	    Solver.ReasonNoSolution.NO_POSTFIX,
+	    Solver.ReasonNoSolution.LENGTH_UNBALANCED };
+    final boolean[] results = { false, true, /*true,*/ true, true, true, true,
+				false, false, false, false };
     
     @Test
     public void testFilters () {
