@@ -11,3 +11,15 @@
 * Add mask and exclusion method to filters.
 
 * Probe forward and backward search, estimate branching factor, and search the direction with the smallest one.
+
+* Provide a way to generate a random PCP instance.
+** A button "Random..." launches a dialog.
+** The dialog lets you choose size and width.
+** The instance is written in the correct format in the input textarea. Overwriting any other input.
+
+* Optimize for binary PCP instances.
+** Use a bitvector instead of String to represent dominos and configurations.
+
+* Clean up PcpState
+** Keep only 1 or 2 strings instead of 3.
+** Use Pair<String, boolean> or Pair<String, String> as key and to generate hashvalue.
