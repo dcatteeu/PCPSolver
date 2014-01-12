@@ -1,6 +1,6 @@
 /*
 PCPSolver. Java solver for the Post Correspondence Problem.
-Copyright 2013 David Catteeuw
+Copyright 2013, 2014 David Catteeuw
 
 This file is part of PCPSolver.
 
@@ -27,6 +27,10 @@ import drc.pcpsolver.pcp.*;
                         
 public class InstancePanel extends JPanel
 {
+    final static String WEBSITE_EXAMPLE = "baa/b\na/baa\nb/a";
+    final static String EASIER_REVERSAL  = "110/0\n1/101\n1/00\n0/11";
+    final static String INITIAL_INSTANCE = EASIER_REVERSAL;
+
     final JTextArea textArea;
 
     InstancePanel () {
@@ -39,7 +43,7 @@ public class InstancePanel extends JPanel
 		       "</html>"),
 	    BorderLayout.PAGE_START);
 	
-	textArea = new JTextArea("baa/b\na/baa\nb/a");
+	textArea = new JTextArea(INITIAL_INSTANCE);
 	JScrollPane scrollPane = new JScrollPane(textArea);
 	textArea.setEditable(true);
 	add(scrollPane, BorderLayout.CENTER);

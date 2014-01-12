@@ -1,6 +1,6 @@
 /*
 PCPSolver. Java solver for the Post Correspondence Problem.
-Copyright 2013 David Catteeuw
+Copyright 2013, 2014 David Catteeuw
 
 This file is part of PCPSolver.
 
@@ -148,5 +148,17 @@ public class Pcp extends AbstractSearchProblem
 	}
 	assert h >= 0;
 	return h;
+    }
+
+    @Override
+    public String toString () {
+	if (dominoes.length <= 0) {
+	    return new String("<Pcp: no dominoes>");
+	}
+	String result = new String("<Pcp: " + dominoes[0]);
+	for (int i = 1; i < dominoes.length; i++) {
+	    result = result.concat(", " + dominoes[i]);
+	}
+	return result.concat(">");
     }
 }

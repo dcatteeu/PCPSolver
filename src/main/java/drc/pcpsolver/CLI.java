@@ -1,6 +1,6 @@
 /*
 PCPSolver. Java solver for the Post Correspondence Problem.
-Copyright 2013 David Catteeuw
+Copyright 2013, 2014 David Catteeuw
 
 This file is part of PCPSolver.
 
@@ -51,18 +51,16 @@ public class CLI
 	return dominoes;
     }
     
-    String solutionToString (Node solution) {
-	List<Node> path = solution.pathTo();
-	String top="", bottom="";
-	Iterator<Node> it = path.iterator();
-	it.next(); // Skip root node, it has no action.
-	Domino domino = (Domino) it.next().action;
-	top = top.concat(domino.top);
-	bottom = bottom.concat(domino.bottom);
+    String solutionToString (List<Domino> match) {
+	String top = "", bottom = "";
+	Iterator<Domino> it = match.iterator();
+	Domino domino = it.next();
+	top = domino.top;
+	bottom = domino.bottom;
 	while (it.hasNext()) {
 	    top = top.concat(" | ");
 	    bottom = bottom.concat(" | ");
-	    domino = (Domino) it.next().action;
+	    domino = it.next();
 	    top = top.concat(domino.top);
 	    bottom = bottom.concat(domino.bottom);
 	}
@@ -74,10 +72,10 @@ public class CLI
 	if (reason != null) {
 	    System.out.println("PCP instance has no match." + reason.explanation());
 	} else {
-	    Node solution = solver.findMatch(pcp, maxDepth);
-	    if (solution != null) {
+	    List<Domino> match = solver.findMatch(pcp, maxDepth);
+	    if (match != null) {
 		System.out.println("PCP instance has a match: ");
-		System.out.println(solutionToString(solution));
+		System.out.println(solutionToString(match));
 	    } else {
 		System.out.println("PCP instance has no match of length less " +
 				   "than or equal to " + maxDepth);

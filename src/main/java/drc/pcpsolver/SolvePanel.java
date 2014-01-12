@@ -1,6 +1,6 @@
 /*
 PCPSolver. Java solver for the Post Correspondence Problem.
-Copyright 2013 David Catteeuw
+Copyright 2013, 2014 David Catteeuw
 
 This file is part of PCPSolver.
 
@@ -34,7 +34,7 @@ public class SolvePanel extends JPanel implements ActionListener
     static final int REPORT_INTERVAL = 500;
     static final int INITIAL_REPORT_DELAY = REPORT_INTERVAL;
     static final int CACHE_SIZE = 100000;
-    static final double DEFAULT_MAX_DEPTH = 100.0;
+    static final int DEFAULT_MAX_DEPTH = 200;
 
     // final JTextField maxSolutionLengthTextField;
     final JButton solveButton, cancelButton;
@@ -88,49 +88,48 @@ public class SolvePanel extends JPanel implements ActionListener
 	solver = new Solver();	
     }
     
-    String solutionToString (List<ActionInterface> actions) {
+    String solutionToString (List<Domino> match) {
 	String top = "", bottom = "";
-	Iterator<ActionInterface> it = actions.iterator();
-	Domino domino = (Domino) it.next();
+	Iterator<Domino> it = match.iterator();
+	Domino domino = it.next();
 	top = domino.top;
 	bottom = domino.bottom;
 	while (it.hasNext()) {
 	    top = top.concat(" | ");
 	    bottom = bottom.concat(" | ");
-	    domino = (Domino) it.next();
+	    domino = it.next();
 	    top = top.concat(domino.top);
 	    bottom = bottom.concat(domino.bottom);
 	}
 	return top + "\n" + bottom + "\n";
     }
     
-    void printSolution (Node solution) {
-	if (solution != null) {
-	    List<ActionInterface> actions = solution.actionsTo();
+    void printSolution (List<Domino> match) {
+	if (match != null) {
 	    outputTextArea.setText("The PCP instance has a match of length "
-				   + actions.size() + ":\n");
-	    outputTextArea.append(solutionToString(actions));
+				   + match.size() + ":\n");
+	    outputTextArea.append(solutionToString(match));
 	} else {
 	    outputTextArea.setText("The PCP instance has no match.\n" +
 				   "All possibilities have been examined.");
 	}
-	double avgBranchingFactor = 1.0;
-	int n = solver.searchAlgorithm.nofNodesVisited(0);
-	System.out.println("" + 0 + "\t" + n);
-	for (int i = 1; i < Solver.PROBE_DEPTH; i++) {
-	    n = solver.searchAlgorithm.nofNodesVisited(i);
-	    int m = solver.searchAlgorithm.nofNodesVisited(i-1);
-	    double b = 1.0 * n / m;
-	    avgBranchingFactor += b;
-	    System.out.println("" + i + "\t" + n + "\t" + b);
-	    if (n == 0) {
-		break;
-	    }
-	}
-	avgBranchingFactor /= Solver.PROBE_DEPTH - 1;
-	System.out.println("avg bf: " + avgBranchingFactor);
+	// double avgBranchingFactor = 1.0;
+	// int n = solver.searchAlgorithm.nofNodesVisited(0);
+	// System.out.println("" + 0 + "\t" + n);
+	// for (int i = 1; i < Solver.PROBE_DEPTH; i++) {
+	//     n = solver.searchAlgorithm.nofNodesVisited(i);
+	//     int m = solver.searchAlgorithm.nofNodesVisited(i-1);
+	//     double b = 1.0 * n / m;
+	//     avgBranchingFactor += b;
+	//     System.out.println("" + i + "\t" + n + "\t" + b);
+	//     if (n == 0) {
+	// 	break;
+	//     }
+	// }
+	// avgBranchingFactor /= Solver.PROBE_DEPTH - 1;
+	// System.out.println("avg bf: " + avgBranchingFactor);
     }
-
+    
     void printSearchStatistics () {
 	// IterativeDeepeningSearch algo
 	//     = (IterativeDeepeningSearch) searchAlgorithm;
@@ -145,18 +144,18 @@ public class SolvePanel extends JPanel implements ActionListener
 	// outputTextArea.append("hits: " + algo.nofClosedListHits() + "\n");
     }
 
-    class SearchTask extends SwingWorker<Node, Void>
+    class SearchTask extends SwingWorker<List<Domino>, Void>
     {
 	final Pcp pcp;
-	final double maxDepth;
+	final int maxDepth;
 	
-	SearchTask (Pcp pcp, double maxDepth) {
+	SearchTask (Pcp pcp, int maxDepth) {
 	    this.pcp = pcp;
 	    this.maxDepth = maxDepth;
 	}
 	
 	@Override
-	public Node doInBackground() {
+	public List<Domino> doInBackground() {
 	    return solver.findMatch(pcp, maxDepth);
 	}
 
