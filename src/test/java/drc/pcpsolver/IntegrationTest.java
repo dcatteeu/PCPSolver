@@ -1,6 +1,6 @@
 /*
 PCPSolver. Java solver for the Post Correspondence Problem.
-Copyright 2013 David Catteeuw
+Copyright 2013, 2014 David Catteeuw
 
 This file is part of PCPSolver.
 

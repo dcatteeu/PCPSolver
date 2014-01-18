@@ -106,12 +106,12 @@ public class SolvePanel extends JPanel implements ActionListener
     
     void printSolution (List<Domino> match) {
 	if (match != null) {
-	    outputTextArea.setText("The PCP instance has a match of length "
-				   + match.size() + ":\n");
+	    outputTextArea.append("The PCP instance has a match of length "
+				  + match.size() + ":\n");
 	    outputTextArea.append(solutionToString(match));
 	} else {
-	    outputTextArea.setText("The PCP instance has no match.\n" +
-				   "All possibilities have been examined.");
+	    outputTextArea.append("The PCP instance has no match.\n" +
+				  "All possibilities have been examined.");
 	}
 	// double avgBranchingFactor = 1.0;
 	// int n = solver.searchAlgorithm.nofNodesVisited(0);
@@ -134,8 +134,8 @@ public class SolvePanel extends JPanel implements ActionListener
 	// IterativeDeepeningSearch algo
 	//     = (IterativeDeepeningSearch) searchAlgorithm;
 	long elapsedTime = System.currentTimeMillis() - startTime;
-	outputTextArea.setText("Searching for " + elapsedTime / 1000
-			       + " seconds.");
+	outputTextArea.setText("Searched for " + elapsedTime / 1000
+			       + " seconds.\n");
 	// outputTextArea.append("iteration: " + algo.currentIteration() + "\n");
 	// outputTextArea.append("nodes: " + algo.nofNodesVisited() / 1000 + "K\n");
 	// outputTextArea.append("depth: " + algo.currentDepth() + "\n");

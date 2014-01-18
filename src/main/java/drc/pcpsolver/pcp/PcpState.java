@@ -23,84 +23,81 @@ package drc.pcpsolver.pcp;
 import drc.jsearch.*;
 
 public class PcpState implements StateInterface
-{    
-    // The unmatched part of top and bottom string. Either top or
-    // bottom is empty.
-    final String top, bottom;
-
-    final int matchLength;
-    // The cached hashcode, depends on the unmatched part.
-    final int hashcode;
-
-    final String value;
-
-    PcpState (String top, String bottom, int matchLength) {
-	this.top = top;
-	this.bottom = bottom;
+{
+    protected final Configuration configuration;
+    protected final int matchLength;
+    
+    public PcpState (String configuration, boolean inTop, int matchLength) {
+	this.configuration = new Configuration(configuration, inTop);
 	this.matchLength = matchLength;
-	assert (top.isEmpty() || bottom.isEmpty());
-	if (matchLength == 0) {
-	    assert (top.isEmpty() && bottom.isEmpty());
-	    this.value = "|null|";
-	} else {
-	    this.value = top + "|" + bottom;
-	}
-	this.hashcode = value.hashCode();
     }
-
-    public String key () {
-	return value;
-    }
-
+    
     // Return the configuration that results from adding the given
     // domino to the current configuration.
     PcpState add (Domino domino) {
-	String top = this.top.concat(domino.top);
-	String bottom = this.bottom.concat(domino.bottom);
+	String top, bottom;
+	if (configuration.isInTop()) {
+	    top = configuration.getValue().concat(domino.top);
+	    bottom = domino.bottom;
+	} else {
+	    top = domino.top;
+	    bottom = configuration.getValue().concat(domino.bottom);	    
+	}
 	int matchLength = 0;
 	while (matchLength < top.length() && matchLength < bottom.length()
 	       && top.charAt(matchLength) == bottom.charAt(matchLength)) {
 	    matchLength++;
 	}
-	return (matchLength < top.length() && matchLength < bottom.length())
-	    ? null // No match.
-	    : new PcpState(top.substring(matchLength),
-			   bottom.substring(matchLength),
-			   this.matchLength + matchLength);
-    }
-
-    int lengthDifference () {
-	return top.length() - bottom.length();	
-    }
-    
-    // Return true if, and only if, the two configurations are equal:
-    // their top and bottom string must match and they must have at
-    // least matchLength 1; or they must both be the initial configuration.
-    @Override
-    public boolean equals (Object other) {
-	if (other instanceof PcpState) {
-	    PcpState otherPcp = (PcpState) other;
-	    if (matchLength == 0) {
-		// The initial configuration.
-		return otherPcp.matchLength == 0;
-	    } else {
-		return matchLength > 0 && otherPcp.matchLength > 0
-		    && top.equals(otherPcp.top)
-		    && bottom.equals(otherPcp.bottom);
-	    }
+	if (matchLength == top.length()) {
+	    return new PcpState(bottom.substring(matchLength), false,
+				this.matchLength + matchLength);
+	} else if (matchLength == bottom.length()) {
+	    return new PcpState(top.substring(matchLength), true,
+				this.matchLength + matchLength);
 	} else {
-	    return false;
+	    return null;
 	}
     }
 
-    @Override
-    public int hashCode () {
-	return hashcode;
+    public Configuration getConfiguration () {
+	return configuration;
     }
+    
+    public int getMatchLength () {
+	return matchLength;
+    }
+    
+    public int lengthDifference () {
+	return (configuration.isInTop() ? +1 : -1) * configuration.length();	
+    }
+    
+    // // Return true if, and only if, the two configurations are equal:
+    // // their top and bottom string must match and they must have at
+    // // least matchLength 1; or they must both be the initial configuration.
+    // @Override
+    // public boolean equals (Object other) {
+    // 	if (other instanceof PcpState) {
+    // 	    PcpState otherPcp = (PcpState) other;
+    // 	    if (matchLength == 0) {
+    // 		// The initial configuration.
+    // 		return otherPcp.matchLength == 0;
+    // 	    } else {
+    // 		return matchLength > 0 && otherPcp.matchLength > 0
+    // 		    && top.equals(otherPcp.top)
+    // 		    && bottom.equals(otherPcp.bottom);
+    // 	    }
+    // 	} else {
+    // 	    return false;
+    // 	}
+    // }
+
+    // @Override
+    // public int hashCode () {
+    // 	return hashcode;
+    // }
 
     @Override
     public String toString () {
-	return new String("<PcpState: " + top + ", " +
-			  bottom + ", " + matchLength + ">");
+	return new String("<PcpState: " + configuration + ", " + matchLength + ">");
     }
 }

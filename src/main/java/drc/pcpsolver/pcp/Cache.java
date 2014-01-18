@@ -25,12 +25,11 @@ import drc.jsearch.*;
 
 public class Cache implements ClosedListInterface
 {
-    // TODO: Can we replace map by set?
-    final HashMap<String, PcpState> configurations;
-    final int maxSize;
+    protected final HashMap<Configuration, Integer> configurations;
+    protected final int maxSize;
 
     public Cache (int maxSize) {
-	configurations = new HashMap<String, PcpState>();
+	this.configurations = new HashMap<Configuration, Integer>();
 	this.maxSize = maxSize;
     }
 
@@ -39,25 +38,32 @@ public class Cache implements ClosedListInterface
     @Override
     public boolean contains (StateInterface state) {
 	PcpState pcpState = (PcpState) state;
-	PcpState value = configurations.get(pcpState.key());
-	return value != null && value.matchLength <= pcpState.matchLength;
+	Integer matchLength = configurations.get(pcpState.getConfiguration());
+	return (matchLength != null) && (matchLength <= pcpState.getMatchLength());
     }
 
     // Add a configuration to the cache if it is not yet in it and
     // there is still room. If the same configuration is already
-    // cached, but has a higher matchLength, the old configuration is
+    // cached, but has a longer match, the old configuration is
     // replaced by the new one. Return true if, and only if, the
-    // configuration is added to the cache or replaces a older one.
+    // configuration is added to the cache or replaces an older one.
     @Override
     public boolean add (StateInterface state) {
 	PcpState pcpState = (PcpState) state;
-	PcpState value = configurations.get(pcpState.key());
-	if ((value == null) && (size() < maxSize)
-	    || ((value != null) && (value.matchLength > pcpState.matchLength))) {
-	    configurations.put(pcpState.key(), pcpState);
+	Integer matchLength = configurations.get(pcpState.getConfiguration());
+	if (matchLength == null) {
+	    if (size() < maxSize) {
+		configurations.put(pcpState.getConfiguration(), pcpState.getMatchLength());
+		return true;
+	    } else {
+		return false;
+	    }
+	} else if (pcpState.getMatchLength() < matchLength) {
+	    configurations.put(pcpState.getConfiguration(), pcpState.getMatchLength());
 	    return true;
+	} else {
+	    return false;
 	}
-	return false;
     }
 
     // Empty the cache.

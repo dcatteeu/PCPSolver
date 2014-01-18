@@ -110,14 +110,14 @@ public class Pcp extends AbstractSearchProblem
 
     @Override
     public StateInterface getInitialState () {
-	return new PcpState("", "", 0);
+	return new PcpState("", true, 0);
     }
 
     @Override
     public boolean isSolution (StateInterface state) {
 	PcpState pcpState = (PcpState) state;
-	return pcpState.top.isEmpty() && pcpState.bottom.isEmpty()
-	    && pcpState.matchLength > 0;
+	return pcpState.getConfiguration().getValue().isEmpty()
+	    && pcpState.getMatchLength() > 0;
     }
 
     @Override
