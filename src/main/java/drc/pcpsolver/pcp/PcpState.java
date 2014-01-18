@@ -70,31 +70,6 @@ public class PcpState implements StateInterface
     public int lengthDifference () {
 	return (configuration.isInTop() ? +1 : -1) * configuration.length();	
     }
-    
-    // // Return true if, and only if, the two configurations are equal:
-    // // their top and bottom string must match and they must have at
-    // // least matchLength 1; or they must both be the initial configuration.
-    // @Override
-    // public boolean equals (Object other) {
-    // 	if (other instanceof PcpState) {
-    // 	    PcpState otherPcp = (PcpState) other;
-    // 	    if (matchLength == 0) {
-    // 		// The initial configuration.
-    // 		return otherPcp.matchLength == 0;
-    // 	    } else {
-    // 		return matchLength > 0 && otherPcp.matchLength > 0
-    // 		    && top.equals(otherPcp.top)
-    // 		    && bottom.equals(otherPcp.bottom);
-    // 	    }
-    // 	} else {
-    // 	    return false;
-    // 	}
-    // }
-
-    // @Override
-    // public int hashCode () {
-    // 	return hashcode;
-    // }
 
     @Override
     public String toString () {
