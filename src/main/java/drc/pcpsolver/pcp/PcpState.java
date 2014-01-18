@@ -1,6 +1,6 @@
 /*
 PCPSolver. Java solver for the Post Correspondence Problem.
-Copyright 2013 David Catteeuw
+Copyright 2013, 2014 David Catteeuw
 
 This file is part of PCPSolver.
 
@@ -27,19 +27,19 @@ public class PcpState implements StateInterface
     // The unmatched part of top and bottom string. Either top or
     // bottom is empty.
     final String top, bottom;
-    // Depth of the state. This is the number of dominoes used.
-    final int depth;
+
+    final int matchLength;
     // The cached hashcode, depends on the unmatched part.
     final int hashcode;
 
     final String value;
 
-    PcpState (String top, String bottom, int depth) {
+    PcpState (String top, String bottom, int matchLength) {
 	this.top = top;
 	this.bottom = bottom;
-	this.depth = depth;
+	this.matchLength = matchLength;
 	assert (top.isEmpty() || bottom.isEmpty());
-	if (depth == 0) {
+	if (matchLength == 0) {
 	    assert (top.isEmpty() && bottom.isEmpty());
 	    this.value = "|null|";
 	} else {
@@ -50,7 +50,6 @@ public class PcpState implements StateInterface
 
     public String key () {
 	return value;
-	//	return (depth == 0) ? "|null|" : top + "|" + bottom;
     }
 
     // Return the configuration that results from adding the given
@@ -67,7 +66,7 @@ public class PcpState implements StateInterface
 	    ? null // No match.
 	    : new PcpState(top.substring(matchLength),
 			   bottom.substring(matchLength),
-			   depth+1);
+			   this.matchLength + matchLength);
     }
 
     int lengthDifference () {
@@ -76,16 +75,16 @@ public class PcpState implements StateInterface
     
     // Return true if, and only if, the two configurations are equal:
     // their top and bottom string must match and they must have at
-    // least depth 1; or they must both be the initial configuration.
+    // least matchLength 1; or they must both be the initial configuration.
     @Override
     public boolean equals (Object other) {
 	if (other instanceof PcpState) {
 	    PcpState otherPcp = (PcpState) other;
-	    if (depth == 0 && otherPcp.depth == 0) {
+	    if (matchLength == 0) {
 		// The initial configuration.
-		return true;
+		return otherPcp.matchLength == 0;
 	    } else {
-		return depth > 0 && otherPcp.depth > 0
+		return matchLength > 0 && otherPcp.matchLength > 0
 		    && top.equals(otherPcp.top)
 		    && bottom.equals(otherPcp.bottom);
 	    }
@@ -102,6 +101,6 @@ public class PcpState implements StateInterface
     @Override
     public String toString () {
 	return new String("<PcpState: " + top + ", " +
-			  bottom + ", " + depth + ">");
+			  bottom + ", " + matchLength + ">");
     }
 }

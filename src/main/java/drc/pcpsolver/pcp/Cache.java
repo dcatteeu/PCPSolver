@@ -1,6 +1,6 @@
 /*
 PCPSolver. Java solver for the Post Correspondence Problem.
-Copyright 2013 David Catteeuw
+Copyright 2013, 2014 David Catteeuw
 
 This file is part of PCPSolver.
 
@@ -35,17 +35,17 @@ public class Cache implements ClosedListInterface
     }
 
     // Return true if, and only if, the configuration is already in
-    // the cache with the same or lower depth.
+    // the cache with the same or lower matchLength.
     @Override
     public boolean contains (StateInterface state) {
 	PcpState pcpState = (PcpState) state;
 	PcpState value = configurations.get(pcpState.key());
-	return value != null && value.depth <= pcpState.depth;
+	return value != null && value.matchLength <= pcpState.matchLength;
     }
 
     // Add a configuration to the cache if it is not yet in it and
     // there is still room. If the same configuration is already
-    // cached, but has a higher depth, the old configuration is
+    // cached, but has a higher matchLength, the old configuration is
     // replaced by the new one. Return true if, and only if, the
     // configuration is added to the cache or replaces a older one.
     @Override
@@ -53,7 +53,7 @@ public class Cache implements ClosedListInterface
 	PcpState pcpState = (PcpState) state;
 	PcpState value = configurations.get(pcpState.key());
 	if ((value == null) && (size() < maxSize)
-	    || ((value != null) && (value.depth > pcpState.depth))) {
+	    || ((value != null) && (value.matchLength > pcpState.matchLength))) {
 	    configurations.put(pcpState.key(), pcpState);
 	    return true;
 	}

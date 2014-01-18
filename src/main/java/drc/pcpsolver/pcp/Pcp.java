@@ -117,7 +117,7 @@ public class Pcp extends AbstractSearchProblem
     public boolean isSolution (StateInterface state) {
 	PcpState pcpState = (PcpState) state;
 	return pcpState.top.isEmpty() && pcpState.bottom.isEmpty()
-	    && pcpState.depth > 0;
+	    && pcpState.matchLength > 0;
     }
 
     @Override
