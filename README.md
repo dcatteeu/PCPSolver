@@ -30,3 +30,4 @@ Please [report](https://github.com/dcatteeu/pcpsolver/issues/new) any bugs or su
 
 * Ling Zhao provides the [C++ source code](http://webdocs.cs.ualberta.ca/~games/PCP/) of his PCP Solver. You must compile it yourself. It is probably the fastest and most advanced PCP Solver available, but only works for PCP instances with a binary alphabet (`0`s and `1`s). The code is also available at [GitHub](https://github.com/chrozz/PCPSolver).
 * There is an [online PCP Solver](http://jamesvanboxtel.com/projects/pcp-solver/) implemented in PHP. It is capable of solving some simple PCP instances, but may crash on harder problems.
+* [Post Correspondence Problem](https://www.interviewbit.com/blog/post-correspondence-problem/)
